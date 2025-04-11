@@ -1,18 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "axios"; // No olvides importar axios
 import "./css/Login.css";
-
-// Configuración para deshabilitar la verificación SSL en desarrollo
-if (process.env.NODE_ENV === "development") {
-  axios.defaults.httpsAgent = new (require('https').Agent)({ rejectUnauthorized: false });
-}
+import https from "https"; // Importamos el módulo https
 
 const Login = () => {
     const [usuario, setUsuario] = useState({ email: "", password: "" });
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false); 
+    const [loading, setLoading] = useState(false); // Agregado para el estado de carga
     const navigate = useNavigate();
+
+    // Deshabilitar la verificación SSL solo en desarrollo
+    if (process.env.NODE_ENV === "development") {
+        axios.defaults.httpsAgent = new https.Agent({ rejectUnauthorized: false });
+    }
 
     const handleChange = (e) => {
         setUsuario({ ...usuario, [e.target.name]: e.target.value });
@@ -21,7 +22,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
-        setLoading(true);
+        setLoading(true); // Iniciar estado de carga
 
         try {
             const response = await axios.post("https://leodv.duckdns.org/login", usuario);
@@ -35,10 +36,17 @@ const Login = () => {
                 setError("Credenciales incorrectas");
             }
         } catch (error) {
-            console.error("Error al intentar iniciar sesión:", error);
-            setError("Hubo un problema al iniciar sesión. Intenta de nuevo.");
+            if (error.response) {
+                // Si hay una respuesta de la API, manejar el error de respuesta
+                console.error("Error de respuesta de la API:", error.response);
+                setError("Hubo un problema al iniciar sesión. Intenta de nuevo.");
+            } else {
+                // Si no hay respuesta, manejar el error de conexión
+                console.error("Error al intentar iniciar sesión:", error);
+                setError("No se pudo conectar con el servidor. Verifica tu conexión.");
+            }
         } finally {
-            setLoading(false);
+            setLoading(false); // Finalizar estado de carga
         }
     };
 
