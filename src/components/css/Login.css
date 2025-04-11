@@ -1,0 +1,125 @@
+/* Estilos para el contenedor del login */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;  /* Asegura que ocupe toda la pantalla */
+    background-image: url('/public/fondo.jpg');  /* Fondo con imagen */
+    background-size: cover;  /* Hace que la imagen cubra todo el contenedor */
+    background-position: center;  /* Centra la imagen */
+    background-repeat: no-repeat;  /* Evita que la imagen se repita */
+    background-attachment: fixed;  /* Hace que la imagen de fondo se mantenga fija al hacer scroll */
+    position: absolute;  /* Hace que el contenedor cubra toda la pantalla */
+    top: 0;
+    left: 0;
+}
+
+/* Estilos de la caja de login */
+.login-box {
+    background: rgba(255, 255, 255, 0.8); /* Fondo con transparencia para dejar ver la imagen */
+    border-radius: 12px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+    padding: 40px;  /* Se reduce el padding para hacerla más pequeña */
+    width: 100%;
+    max-width: 400px;  /* Se reduce el tamaño máximo */
+    text-align: center;
+    transform: translateY(-50px);
+    animation: slideUp 0.5s ease-out forwards;
+    transition: transform 0.3s ease;
+}
+
+/* Efecto de zoom al pasar el ratón sobre la caja de login */
+.login-box:hover {
+    transform: scale(1.05);
+}
+
+/* Título */
+h2 {
+    font-size: 1.6rem;  /* Tamaño más pequeño */
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* Contenedor de los inputs */
+.input-group {
+    margin-bottom: 20px;
+}
+
+/* Estilos para los campos de entrada */
+.input-field {
+    width: 100%;
+    padding: 14px;  /* Ajuste en el tamaño de los recuadros */
+    font-size: 1rem;  /* Tamaño de la fuente ajustado */
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+/* Estilos cuando el campo de entrada está enfocado */
+.input-field:focus {
+    border-color: #6e7dff;
+}
+
+/* Estilos para el botón de envío */
+.submit-button {
+    width: 100%;
+    padding: 14px;  /* Ajuste en el padding */
+    background-color: #6e7dff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;  /* Ajuste en el tamaño de la fuente */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el hover del botón */
+.submit-button:hover {
+    background-color: #4a58cc;
+}
+
+/* Estilos para el estado activo del botón */
+.submit-button:active {
+    background-color: #3a47b8;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Animación de deslizamiento */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilos para el botón Registrarse */
+.register-button {
+    width: 100%;
+    padding: 12px;  /* Ajuste en el tamaño del padding */
+    background-color: #4a58cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;  /* Ajuste en el tamaño de la fuente */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.register-button:hover {
+    background-color: #6e7dff;
+}
+
+.register-button:active {
+    background-color: #3a47b8;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

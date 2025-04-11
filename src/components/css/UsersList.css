@@ -1,0 +1,114 @@
+/* Estilos para la lista de usuarios */
+.users-list-container {
+    width: 90%; /* Aumento aún más el tamaño del contenedor */
+    margin: 40px auto; /* Lo movemos más arriba */
+    padding: 50px; /* Aumento del padding para mayor espacio */
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco con transparencia */
+    border-radius: 12px; /* Bordes más redondeados */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+    position: relative;
+    top: -30px; /* Moverlo más arriba */
+  }
+  
+  /* Título de la lista de usuarios */
+  h2 {
+    text-align: center;
+    color: #333;
+    font-size: 3.5rem; /* Aumento significativo del tamaño del título */
+    margin-bottom: 50px; /* Mayor espacio debajo del título */
+  }
+  
+  /* Estilo de la barra de búsqueda */
+  .search-input {
+    width: 60%; /* Hago el buscador más grande */
+    padding: 20px; /* Aumento del padding */
+    margin: 0 auto 40px auto; /* Centrado y espacio debajo */
+    display: block;
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Bordes más redondeados */
+    font-size: 1.5rem; /* Aumento del tamaño de la fuente */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo transparente en la barra de búsqueda */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Efecto cuando el campo de búsqueda está enfocado */
+  .search-input:focus {
+    border-color: #6e7dff;
+    box-shadow: 0 0 10px rgba(110, 125, 255, 0.5);
+    outline: none;
+  }
+  
+  /* Estilos para la lista de usuarios */
+  .users-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Estilos de cada ítem de la lista */
+  .user-item {
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
+    border: 1px solid #ddd;
+    padding: 20px; /* Aumento del padding para mayor espacio */
+    margin-bottom: 20px; /* Mayor espacio entre los ítems */
+    border-radius: 8px; /* Bordes más redondeados */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem; /* Aumento del tamaño de la fuente */
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Estilo para el nombre de usuario */
+  .user-name {
+    font-size: 1.8rem; /* Aumento del tamaño del nombre */
+    font-weight: bold;
+  }
+  
+  /* Estilo para el correo electrónico del usuario */
+  .user-email {
+    font-size: 1.5rem; /* Aumento del tamaño del correo */
+    color: #555;
+  }
+  
+  /* Efecto de hover en los ítems de la lista */
+  .user-item:hover {
+    background-color: rgba(110, 125, 255, 0.1); /* Fondo suave al pasar el mouse */
+  }
+  
+  /* Estilos para la paginación */
+  .pagination {
+    text-align: center;
+    margin-top: 50px; /* Mayor espacio arriba */
+  }
+  
+  /* Estilos para los botones de paginación */
+  .pagination-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 15px 30px; /* Aumento del padding */
+    margin: 0 15px; /* Mayor espacio entre los botones */
+    cursor: pointer;
+    border-radius: 6px; /* Bordes más redondeados */
+    font-size: 1.5rem; /* Aumento del tamaño de la fuente */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  /* Efecto hover sobre los botones de paginación */
+  .pagination-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+  }
+  
+  /* Estilo para el botón activo */
+  .pagination-button.active {
+    background-color: #0056b3;
+    font-weight: bold;
+  }
+  
+  /* Estilo para los botones cuando están en foco */
+  .pagination-button:focus {
+    outline: none;
+  }
+  
