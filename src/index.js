@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import Formulario from './components/formulario';
 import Login from './components/login';
 import UsersList from './components/UsersList';
+import UserDetails from './components/UserView';
+import EditUser from './components/EditUser';
 
 // Usamos createRoot para renderizar la aplicación en React 18 y posterior
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -18,6 +20,8 @@ root.render(
         <Route path="/formulario" element={<Formulario />} /> {/* Ruta para el formulario */}
         <Route path="/" element={<Login />} /> {/* Ruta para el login */}
         <Route path="/Users" element={<UsersList /> }/>
+        <Route path="/Views" element={<UserDetails />} /> {/* Ruta para el login */}
+        <Route path="/Edit" element={<EditUser /> }/>
       </Routes>
     </Router>
   </React.StrictMode>

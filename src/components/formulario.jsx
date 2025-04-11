@@ -1,73 +1,88 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import bcrypt from 'bcryptjs'; 
-import './css/Formulario.css'; 
+import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import axios from "axios";
+import "./css/Formulario.css"; // Asegúrate de que el archivo CSS esté correctamente importado
 
 const Formulario = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+    const [usuario, setUsuario] = useState({
+        nombre: "",
+        email: "",
+        password: "",
+    });
 
- 
-  const encryptPassword = (password) => {
-    // Generamos un "salt" y encriptamos la contraseña
-    const salt = bcrypt.genSaltSync(10); 
-    const hashedPassword = bcrypt.hashSync(password, salt);
-    return hashedPassword;
-  };
+    const navigate = useNavigate(); 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    const encryptedPassword = encryptPassword(password);
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUsuario(prevState => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
 
-    try {
-      const response = await axios.post(
-        'https://api.example.com/users', // URL de la API
-        { name, email, password: encryptedPassword }, 
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('authToken')}`, // Token de autorización
-          },
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post("https://api.navtracker.xdn.com.mx/api/usuario/", usuario);
+            alert("Usuario registrado correctamente");
+            setUsuario({
+                nombre: "",
+                email: "",
+                password: "",
+            });
+            navigate('/login'); 
+        } catch (error) {
+            console.error("Error al registrar usuario", error);
+            alert("Error al registrar usuario");
         }
-      );
-      alert('Usuario creado exitosamente');
-    } catch (error) {
-      alert('Error creando usuario');
-    }
-  };
+    };
 
-  return (
-    <div className="create-user-container">
-      <form className="create-user-form" onSubmit={handleSubmit}>
-        <h2 className="form-title">Crear Usuario</h2>
-        <input
-          type="text"
-          placeholder="Nombre"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="input-field"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="input-field"
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="input-field"
-        />
-        <button type="submit" className="submit-button">
-          Crear Usuario
-        </button>
-      </form>
-    </div>
-  );
+    return (
+        <div className="create-user-container">
+            <h2 className="form-title">Registro de Usuario</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="input-group">
+                    <input 
+                        type="text" 
+                        name="nombre" 
+                        placeholder="Nombre" 
+                        value={usuario.nombre} 
+                        onChange={handleChange} 
+                        required 
+                        className="input-field"
+                    />
+                </div>
+
+                <div className="input-group">
+                    <input 
+                        type="email" 
+                        name="email" 
+                        placeholder="Email" 
+                        value={usuario.email} 
+                        onChange={handleChange} 
+                        required 
+                        className="input-field"
+                    />
+                </div>
+
+                <div className="input-group">
+                    <input 
+                        type="password" 
+                        name="password" 
+                        placeholder="Contraseña" 
+                        value={usuario.password} 
+                        onChange={handleChange} 
+                        required 
+                        className="input-field"
+                    />
+                </div>
+
+                <button type="submit" className="submit-button">
+                    Registrar Usuario
+                </button>
+            </form>
+        </div>
+    );
 };
 
 export default Formulario;

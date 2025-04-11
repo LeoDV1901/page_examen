@@ -1,7 +1,7 @@
-// src/components/UsersList.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; 
 import axios from 'axios';
-import './css/UsersList.css'; 
+import { useNavigate } from 'react-router-dom'; // Importamos useNavigate para redirigir
+import './css/UsersList.css';
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
@@ -9,11 +9,12 @@ const UsersList = () => {
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 3;
+  const navigate = useNavigate(); // Hook para redirigir al usuario
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('https://api.example.com/users', {
+        const response = await axios.get('http://localhost:3000/api/registros', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('authToken')}`,
           },
@@ -28,29 +29,51 @@ const UsersList = () => {
     fetchUsers();
   }, []);
 
-  // Maneja el cambio en el campo de búsqueda
   const handleSearch = (e) => {
     setSearch(e.target.value);
     const filtered = users.filter(user =>
       user.name.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setFilteredUsers(filtered);
-    setCurrentPage(1); // Resetear la página al buscar
+    setCurrentPage(1);
   };
 
-  // Calcular los usuarios que se mostrarán en la página actual
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
-  // Cambiar la página
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  // Generar los números de página
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(filteredUsers.length / usersPerPage); i++) {
     pageNumbers.push(i);
   }
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/registros/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+        },
+      });
+      setUsers(users.filter(user => user.id !== id));
+      setFilteredUsers(filteredUsers.filter(user => user.id !== id));
+    } catch (error) {
+      console.error('Error deleting user', error);
+    }
+  };
+
+  const handleEdit = (id) => {
+    // Redirigir al formulario de edición
+    console.log(`Editar usuario con id: ${id}`);
+    navigate(`/edit/${id}`); // Redirige a la página de edición
+  };
+
+  const handleView = (id) => {
+    // Redirigir a la página de detalles del usuario
+    console.log(`Ver detalles del usuario con id: ${id}`);
+    navigate(`/user/${id}`); // Redirige a la página de ver detalles del usuario
+  };
 
   return (
     <div className="users-list-container">
@@ -67,6 +90,11 @@ const UsersList = () => {
           <li key={user.id} className="user-item">
             <p className="user-name">{user.name}</p>
             <p className="user-email">{user.email}</p>
+            <div className="user-actions">
+              <button onClick={() => handleView(user.id)} className="view-button">Ver</button>
+              <button onClick={() => handleEdit(user.id)} className="edit-button">Editar</button>
+              <button onClick={() => handleDelete(user.id)} className="delete-button">Eliminar</button>
+            </div>
           </li>
         ))}
       </ul>
