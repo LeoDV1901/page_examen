@@ -6,6 +6,7 @@ import "./css/Login.css";
 const Login = () => {
     const [usuario, setUsuario] = useState({ email: "", password: "" });
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false); // Agregado para el estado de carga
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -13,26 +14,35 @@ const Login = () => {
     };
 
     const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
+        e.preventDefault();
+        setError(null);
+        setLoading(true); // Iniciar estado de carga
 
-    try {
-        const response = await axios.post("https://leodv.duckdns.org/login", usuario);
-        console.log("Respuesta de la API:", response.data);
+        try {
+            const response = await axios.post("https://leodv.duckdns.org/login", usuario);
+            console.log("Respuesta de la API:", response.data);
 
-        if (response.data.token) {
-            localStorage.setItem("token", response.data.token);
-            alert("Inicio de sesión exitoso");
-            navigate("/perfil");
-        } else {
-            setError("Credenciales incorrectas");
+            if (response.data.token) {
+                localStorage.setItem("token", response.data.token);
+                alert("Inicio de sesión exitoso");
+                navigate("/perfil");
+            } else {
+                setError("Credenciales incorrectas");
+            }
+        } catch (error) {
+            if (error.response) {
+                // Si hay una respuesta de la API, manejar el error de respuesta
+                console.error("Error de respuesta de la API:", error.response);
+                setError("Hubo un problema al iniciar sesión. Intenta de nuevo.");
+            } else {
+                // Si no hay respuesta, manejar el error de conexión
+                console.error("Error al intentar iniciar sesión:", error);
+                setError("No se pudo conectar con el servidor. Verifica tu conexión.");
+            }
+        } finally {
+            setLoading(false); // Finalizar estado de carga
         }
-    } catch (error) {
-        console.error("Error al intentar iniciar sesión:", error.response);
-        setError("Hubo un problema al iniciar sesión. Intenta de nuevo.");
-    }
-  } 
-
+    };
 
     return (
         <div className="login-container">
@@ -64,8 +74,8 @@ const Login = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="submit-button">
-                        Iniciar Sesión
+                    <button type="submit" className="submit-button" disabled={loading}>
+                        {loading ? "Iniciando..." : "Iniciar Sesión"}
                     </button>
                 </form>
             </div>
