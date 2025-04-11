@@ -13,25 +13,26 @@ const Login = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError(null);
+    e.preventDefault();
+    setError(null);
 
-        try {
-            const response = await axios.post("https://leodv.duckdns.org/login", usuario);
-            console.log("Respuesta de la API:", response.data);
+    try {
+        const response = await axios.post("https://leodv.duckdns.org/login", usuario);
+        console.log("Respuesta de la API:", response.data);
 
-            if (response.data.token) {
-                localStorage.setItem("token", response.data.token);
-                alert("Inicio de sesión exitoso");
-                navigate("/perfil");
-            } else {
-                setError("Credenciales incorrectas");
-            }
-        } catch (error) {
-            console.error("Error al intentar iniciar sesión:", error.response);
-            setError("Hubo un problema al iniciar sesión. Intenta de nuevo.");
+        if (response.data.token) {
+            localStorage.setItem("token", response.data.token);
+            alert("Inicio de sesión exitoso");
+            navigate("/perfil");
+        } else {
+            setError("Credenciales incorrectas");
         }
-    };
+    } catch (error) {
+        console.error("Error al intentar iniciar sesión:", error.response);
+        setError("Hubo un problema al iniciar sesión. Intenta de nuevo.");
+    }
+  } 
+
 
     return (
         <div className="login-container">
