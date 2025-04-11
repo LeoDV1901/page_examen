@@ -1,5 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
+import https from 'https';
+
+// Deshabilitar la verificación de SSL solo en desarrollo
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.httpsAgent = new https.Agent({ rejectUnauthorized: false });
+}
 
 function App() {
   return (
