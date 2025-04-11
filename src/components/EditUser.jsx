@@ -13,7 +13,7 @@ const EditUser = () => {
     });
 
     useEffect(() => {
-        axios.get(`https://api.navtracker.xdn.com.mx/api/usuario/${id_u}`)
+        axios.get(`http://3.145.18.237/users/${id_u}`)
             .then(response => setUsuario(response.data))
             .catch(error => console.error(error));
     }, [id_u]);
@@ -24,7 +24,7 @@ const EditUser = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:3001/api/usuario/${id_u}`, usuario)
+        axios.put(`http://3.145.18.237/users/${id_u}`, usuario)
             .then(() => {
                 alert("Usuario actualizado");
                 navigate("/UserView");

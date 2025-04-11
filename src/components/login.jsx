@@ -17,7 +17,7 @@ const Login = () => {
         setError(null);
 
         try {
-            const response = await axios.post("http://localhost:5000/login", usuario);
+            const response = await axios.post("http://3.145.18.237/login", usuario);
             console.log("Respuesta de la API:", response.data);
 
             if (response.data.token) {

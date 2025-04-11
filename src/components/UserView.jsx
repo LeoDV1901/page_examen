@@ -11,7 +11,7 @@ const UserDetails = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/registros/${id}`, {
+        const response = await axios.get(`http://3.145.18.237/users/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('authToken')}`,
           },

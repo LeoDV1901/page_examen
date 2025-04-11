@@ -14,7 +14,7 @@ const UsersList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/registros', {
+        const response = await axios.get('http://3.145.18.237/users', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('authToken')}`,
           },
@@ -51,7 +51,7 @@ const UsersList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/registros/${id}`, {
+      await axios.delete(`http://3.145.18.237/users/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('authToken')}`,
         },

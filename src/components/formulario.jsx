@@ -23,7 +23,7 @@ const Formulario = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("https://api.navtracker.xdn.com.mx/api/usuario/", usuario);
+            await axios.post("http://3.145.18.237/users/", usuario);
             alert("Usuario registrado correctamente");
             setUsuario({
                 nombre: "",
