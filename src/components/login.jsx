@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import https from "https"; // Importar https
 import "./css/Login.css";
 
 const Login = () => {
@@ -19,7 +20,14 @@ const Login = () => {
         setLoading(true); // Iniciar estado de carga
 
         try {
-            const response = await axios.post("https://leodv.duckdns.org/login", usuario);
+            const response = await axios.post(
+                "https://leodv.duckdns.org/login",
+                usuario,
+                {
+                    // Aquí deshabilitamos la verificación SSL
+                    httpsAgent: new https.Agent({ rejectUnauthorized: false })
+                }
+            );
             console.log("Respuesta de la API:", response.data);
 
             if (response.data.token) {
