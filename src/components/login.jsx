@@ -18,7 +18,7 @@ const Login = () => {
 
         try {
             const response = await axios.post(
-                "https://3.145.18.237/login",
+                "http://3.145.18.237/login",
                 usuario,
                 {
                     withCredentials: true,
