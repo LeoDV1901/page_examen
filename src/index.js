@@ -21,7 +21,7 @@ root.render(
         <Route path="/" element={<Login />} /> {/* Ruta para el login */}
         <Route path="/Users" element={<UsersList /> }/>
         <Route path="/Views" element={<UserDetails />} /> {/* Ruta para el login */}
-        <Route path="/Edit" element={<EditUser /> }/>
+        <Route path="/user/${id}" element={<EditUser /> }/>
       </Routes>
     </Router>
   </React.StrictMode>
