@@ -23,7 +23,7 @@ const Formulario = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://3.145.18.237/users/", usuario);
+            await axios.post("http://18.188.32.86/users/crearusuario", usuario);
             alert("Usuario registrado correctamente");
             setUsuario({
                 nombre: "",
