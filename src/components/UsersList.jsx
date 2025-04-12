@@ -51,7 +51,7 @@ const UsersList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://3.145.18.237/users/${id}`, {
+      await axios.delete(`https://18.188.32.86/users/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('authToken')}`,
         },
