@@ -36,7 +36,7 @@ const Login = () => {
             if (token) {
                 localStorage.setItem("token", token);
                 alert("Inicio de sesión exitoso");
-                navigate("/Views");
+                navigate("/Users");
             } else {
                 setError("Credenciales incorrectas");
             }
