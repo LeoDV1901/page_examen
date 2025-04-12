@@ -31,12 +31,12 @@ const handleSubmit = async (e) => {
         console.log("Respuesta de la API:", response.data);
 
         const token = response.data.access_token;
-        const userId = response.data.id; // <- aquí usas 'id'
+        const userId = response.data.id;
 
         if (token && userId) {
             localStorage.setItem("token", token);
             alert("Inicio de sesión exitoso");
-            navigate(`/Views/${Id}`);
+            navigate(`/Views/${userId}`);
         } else {
             setError("Credenciales incorrectas");
         }
@@ -53,7 +53,6 @@ const handleSubmit = async (e) => {
         }
     }
 };
-
 
     return (
         <div className="login-container">
