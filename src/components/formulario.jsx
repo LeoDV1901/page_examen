@@ -32,7 +32,7 @@ const Formulario = () => {
                 email: "",
                 password: "",
             });
-            navigate('/login');
+            navigate('/');
         } catch (error) {
             console.error("Error al registrar usuario", error);
             alert("Error al registrar usuario");
