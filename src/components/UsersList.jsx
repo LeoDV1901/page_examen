@@ -14,7 +14,7 @@ const UsersList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://3.145.18.237/users', {
+        const response = await axios.get('https://18.188.32.86/users/usuarios', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('authToken')}`,
           },
