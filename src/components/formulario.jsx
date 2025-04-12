@@ -88,8 +88,6 @@ const Formulario = () => {
                         onChange={handleChange} 
                         required 
                         className="input-field"
-                        pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,}$" 
-                        title="La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un símbolo como #, @, $, etc."
                     />
                 </div>
 
