@@ -15,7 +15,7 @@ body {
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 40px 120px;             /* Más espacio lateral, menos vertical */
-  max-width: 100%;                 /* Ocupar todo el ancho disponible */
+  max-width: 50%;                 /* Ocupar todo el ancho disponible */
   margin: 20px auto;               /* Menor espacio arriba y abajo */
   animation: fadeInUp 0.6s ease-out;
   width: 95vw;                     /* Muy ancho sin salirse de la vista */
