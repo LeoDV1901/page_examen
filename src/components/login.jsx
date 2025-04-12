@@ -9,72 +9,136 @@ if (process.env.NODE_ENV === "development") {
 }
 
 const Login = () => {
-    const [usuario, setUsuario] = useState({ email: "", password: "" });
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false); 
     const navigate = useNavigate();
+    const [usuario, setUsuario] = useState({ email: "", password: "" });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [intentos, setIntentos] = useState(0);
+    const [bloqueado, setBloqueado] = useState(false);
+    const [tiempoRestante, setTiempoRestante] = useState(0);
+    const [mostrarContrasena, setMostrarContrasena] = useState(false);
+
+    useEffect(() => {
+        const bloqueo = localStorage.getItem("bloqueo");
+        if (bloqueo) {
+            const tiempoTranscurrido = Date.now() - parseInt(bloqueo, 10);
+            if (tiempoTranscurrido < 60000) {
+                setBloqueado(true);
+                setTiempoRestante(60 - Math.floor(tiempoTranscurrido / 1000));
+                const interval = setInterval(() => {
+                    setTiempoRestante(prev => {
+                        if (prev <= 1) {
+                            clearInterval(interval);
+                            setBloqueado(false);
+                            setUsuario({ email: "", password: "" });
+                            setError("");
+                            localStorage.removeItem("bloqueo");
+                            return 0;
+                        }
+                        return prev - 1;
+                    });
+                }, 1000);
+                return () => clearInterval(interval);
+            }
+        }
+    }, []);
 
     const handleChange = (e) => {
         setUsuario({ ...usuario, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
-        setError(null);
+        if (bloqueado) return;
+
         setLoading(true);
-
-        try {
-            const response = await axios.post("http://3.142.156.97/login", usuario);
-            console.log("Respuesta de la API:", response.data);
-
-            if (response.data.token) {
-                localStorage.setItem("token", response.data.token);
-                alert("Inicio de sesión exitoso");
-                navigate("/perfil");
+        setError("");
+        
+        axios.post("https://3.142.156.97/login", usuario, {
+            headers: { "Content-Type": "application/json" }
+        })
+        .then(response => {
+            if (response.data.access_token) {
+                localStorage.setItem("token", response.data.access_token);
+                navigate("/users/usuarios");
+                window.location.reload();
             } else {
-                setError("Credenciales incorrectas");
+                manejarIntentoFallido();
             }
-        } catch (error) {
-            console.error("Error al intentar iniciar sesión:", error);
-            setError("Hubo un problema al iniciar sesión. Intenta de nuevo.");
-        } finally {
-            setLoading(false);
-        }
+        })
+        .catch(() => {
+            manejarIntentoFallido();
+        });
+    };
+
+    const manejarIntentoFallido = () => {
+        setLoading(false);
+        setError("Error al iniciar sesión, revise sus datos.");
+        setIntentos(prev => {
+            const nuevosIntentos = prev + 1;
+            if (nuevosIntentos >= 3) {
+                setBloqueado(true);
+                setTiempoRestante(60);
+                localStorage.setItem("bloqueo", Date.now().toString());
+                const interval = setInterval(() => {
+                    setTiempoRestante(prev => {
+                        if (prev <= 1) {
+                            clearInterval(interval);
+                            setBloqueado(false);
+                            setUsuario({ email: "", password: "" });
+                            setError("");
+                            localStorage.removeItem("bloqueo");
+                            return 0;
+                        }
+                        return prev - 1;
+                    });
+                }, 1000);
+            }
+            return nuevosIntentos;
+        });
     };
 
     return (
-        <div className="login-container">
-            <div className="login-box">
-                <h2>Inicio de Sesión</h2>
-                {error && <div className="alert alert-danger">{error}</div>}
-                <form onSubmit={handleSubmit}>
-                    <div className="input-group">
-                        <label className="form-label">Email</label>
-                        <input
-                            type="email"
-                            name="email"
-                            className="input-field"
-                            placeholder="Email"
-                            value={usuario.email}
-                            onChange={handleChange}
-                            required
+        <div className="form-container">
+            <div className="form-box">
+                <h2>Iniciar Sesión</h2>
+                <form onSubmit={handleLogin}>
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Correo electrónico" value={usuario.email} onChange={handleChange} required disabled={bloqueado} />
+
+                    <label>Contraseña</label>
+                    <div className="password-container">
+                        <input 
+                            type={mostrarContrasena ? "text" : "password"} 
+                            name="password" 
+                            placeholder="Contraseña" 
+                            value={usuario.password} 
+                            onChange={handleChange} 
+                            required 
+                            disabled={bloqueado} 
                         />
+                        <span 
+                            className="toggle-password" 
+                            onClick={() => setMostrarContrasena(!mostrarContrasena)}
+                            style={{ cursor: "pointer", marginLeft: "8px" }}
+                        >
+                            <i className={`fa ${mostrarContrasena ? "fa-eye-slash" : "fa-eye"}`} /> {/* Aquí usamos los iconos de FontAwesome */}
+                        </span>
                     </div>
-                    <div className="input-group">
-                        <label className="form-label">Contraseña</label>
-                        <input
-                            type="password"
-                            name="password"
-                            className="input-field"
-                            placeholder="Contraseña"
-                            value={usuario.password}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <button type="submit" className="submit-button" disabled={loading}>
-                        {loading ? "Iniciando..." : "Iniciar Sesión"}
-                    </button>
+                    
+                    {bloqueado ? (
+                        <p className="error-message">Demasiados intentos fallidos. Intente de nuevo en {tiempoRestante} segundos.</p>
+                    ) : loading ? (
+                        <div className="loading-animation">Iniciando sesión...</div>
+                    ) : (
+                        <button type="submit">Iniciar sesión</button>
+                    )}
+                    {error && <p className="error-message">{error}</p>}
+                    
+                    <p>
+                        ¿No tiene cuenta? {" "}
+                        <span onClick={() => navigate("/users/crearusuario")} style={{ cursor: "pointer", color: "blue", textDecoration: "none" }}>Regístrese</span>
+                    </p>
                 </form>
             </div>
         </div>
