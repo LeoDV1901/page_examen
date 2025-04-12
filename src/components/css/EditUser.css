@@ -1,52 +1,127 @@
-/* Estilos para el contenedor del formulario de edición */
-.edit-user-container {
-    width: 50%;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+/* Fondo de la página */
+body {
+  background-image: url('/public/fondo.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Contenedor principal del formulario */
+.form-container {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 40px 60px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  animation: fadeInUp 0.6s ease-out;
+  transition: transform 0.3s ease-in-out;
+}
+
+.form-container:hover {
+  transform: scale(1.03);
+}
+
+/* Título */
+.form-container h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+/* Etiquetas */
+form label {
+  display: block;
+  text-align: left;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #444;
+}
+
+/* Inputs */
+form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus {
+  border-color: #6e7dff;
+  box-shadow: 0 0 10px rgba(110, 125, 255, 0.5);
+  outline: none;
+}
+
+/* Botones */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+form button {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Botón principal */
+form button[type="submit"] {
+  background-color: #6e7dff;
+  color: white;
+}
+
+form button[type="submit"]:hover {
+  background-color: #3a55e0;
+  transform: scale(1.05);
+}
+
+/* Botón cancelar */
+.cancel-button {
+  background-color: #ddd;
+}
+
+.cancel-button:hover {
+  background-color: #bbb;
+  transform: scale(1.05);
+}
+
+/* Mensajes */
+.status-message,
+.loading-message {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Animación */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .edit-user-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .edit-user-form .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .edit-user-form label {
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-  
-  .edit-user-form input {
-    width: 100%;
-    padding: 10px;
-    font-size: 1.2rem;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    margin-top: 5px;
-  }
-  
-  .edit-user-form .form-actions {
-    text-align: center;
-  }
-  
-  .save-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    font-size: 1.4rem;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .save-button:hover {
-    background-color: #45a049;
-  }
-  
+}
