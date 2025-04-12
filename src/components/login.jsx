@@ -17,7 +17,17 @@ const Login = () => {
         setError(null);
 
         try {
-            const response = await axios.post("https://3.145.18.237/login", usuario);
+            const response = await axios.post(
+                "https://3.145.18.237/login",
+                usuario,
+                {
+                    withCredentials: true,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
             console.log("Respuesta de la API:", response.data);
 
             if (response.data.token) {
