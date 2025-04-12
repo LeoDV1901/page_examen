@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./css/Login.css";
 
@@ -18,7 +18,7 @@ const Login = () => {
 
         try {
             const response = await axios.post(
-                "httpS://18.188.32.86/users/login",
+                "https://18.188.32.86/users/login", // Asegúrate de que tu servidor esté activo
                 usuario,
                 {
                     withCredentials: true,
@@ -30,16 +30,27 @@ const Login = () => {
 
             console.log("Respuesta de la API:", response.data);
 
-            if (response.data.token) {
-                localStorage.setItem("token", response.data.token);
+            // Ajustado al backend Flask: el token se llama 'access_token'
+            const token = response.data.access_token;
+
+            if (token) {
+                localStorage.setItem("token", token);
                 alert("Inicio de sesión exitoso");
                 navigate("/perfil");
             } else {
                 setError("Credenciales incorrectas");
             }
         } catch (error) {
-            console.error("Error al intentar iniciar sesión:", error.response);
-            setError("Hubo un problema al iniciar sesión. Intenta de nuevo.");
+            if (error.response && error.response.data && error.response.data.msg) {
+                console.error("Respuesta con error:", error.response.data);
+                setError(error.response.data.msg);
+            } else if (error.request) {
+                console.error("No se recibió respuesta del servidor:", error.request);
+                setError("No se recibió respuesta del servidor");
+            } else {
+                console.error("Error inesperado:", error.message);
+                setError("Error inesperado al iniciar sesión");
+            }
         }
     };
 
