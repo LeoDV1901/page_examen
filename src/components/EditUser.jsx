@@ -19,7 +19,7 @@ const EditUser = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    axios.get(`https://18.188.32.86/users/usuario/${id}`)
+    axios.get(`https://18.188.32.86/api/user/${id}`)
       .then(response => {
         const { id, name, email, last_name } = response.data;
         setUsuario({ id, name, email, last_name });
@@ -41,7 +41,7 @@ const EditUser = () => {
     setIsUpdating(true);
     setMessage("Actualizando usuario...");
 
-    axios.put(`https://18.188.32.86/users/actualizarusuario/${id}`, usuario)
+    axios.put(`https://18.188.32.86/api/actualizar/${id}`, usuario)
       .then(() => {
         setMessage("Actualización exitosa. Redirigiendo...");
         setTimeout(() => navigate("/users/usuarios"), 2000);
