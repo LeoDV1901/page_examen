@@ -19,6 +19,7 @@ body {
   margin: 20px auto;               /* Menor espacio arriba y abajo */
   animation: fadeInUp 0.6s ease-out;
   width: 95vw;                     /* Muy ancho sin salirse de la vista */
+  align-items: center;           /* Centra el contenido interno si es necesario */
 }
 
 
