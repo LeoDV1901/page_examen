@@ -1,16 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import axios from "axios";
-import "./css/Formulario.css"; // Asegúrate de que el archivo CSS esté correctamente importado
+import "./css/Formulario.css";
 
 const Formulario = () => {
     const [usuario, setUsuario] = useState({
-        nombre: "",
+        name: "",
+        last_name: "",
         email: "",
         password: "",
     });
 
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -23,14 +24,15 @@ const Formulario = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("https://18.188.32.86/users/crearusuario", usuario);
+            await axios.post("https://3.17.81.51/users/crearusuario", usuario);
             alert("Usuario registrado correctamente");
             setUsuario({
-                nombre: "",
+                name: "",
+                last_name: "",
                 email: "",
                 password: "",
             });
-            navigate('/login'); 
+            navigate('/login');
         } catch (error) {
             console.error("Error al registrar usuario", error);
             alert("Error al registrar usuario");
@@ -44,9 +46,21 @@ const Formulario = () => {
                 <div className="input-group">
                     <input 
                         type="text" 
-                        name="nombre" 
+                        name="name" 
                         placeholder="Nombre" 
-                        value={usuario.nombre} 
+                        value={usuario.name} 
+                        onChange={handleChange} 
+                        required 
+                        className="input-field"
+                    />
+                </div>
+
+                <div className="input-group">
+                    <input 
+                        type="text" 
+                        name="last_name" 
+                        placeholder="Apellido" 
+                        value={usuario.last_name} 
                         onChange={handleChange} 
                         required 
                         className="input-field"
@@ -74,6 +88,8 @@ const Formulario = () => {
                         onChange={handleChange} 
                         required 
                         className="input-field"
+                        pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,}$" 
+                        title="La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un símbolo como #, @, $, etc."
                     />
                 </div>
 
