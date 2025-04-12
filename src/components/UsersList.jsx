@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './css/UsersList.css';
 
 const UsersList = () => {
@@ -8,6 +9,7 @@ const UsersList = () => {
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 3;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -49,24 +51,25 @@ const UsersList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://3.17.81.51/users/eliminarusuario/${id}`, {
+      await axios.delete(`https://18.188.32.86/users/eliminarusuario/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('authToken')}`,
         },
       });
-      setUsers(users.filter(user => user.id !== id));
-      setFilteredUsers(filteredUsers.filter(user => user.id !== id));
+      const updatedList = users.filter(user => user.id !== id);
+      setUsers(updatedList);
+      setFilteredUsers(updatedList);
     } catch (error) {
       console.error('Error deleting user', error);
     }
   };
 
   const handleEdit = (id) => {
-    window.location.href = `/user/${id}`;
+    navigate(`/users/editar/${id}`);
   };
 
   const handleView = (id) => {
-    window.location.href = `/Views/${id}`;
+    navigate(`/users/ver/${id}`);
   };
 
   return (
