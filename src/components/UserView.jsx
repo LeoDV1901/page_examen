@@ -8,7 +8,7 @@ const UserDetails = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`https://18.188.32.86/users/usuario/${id}`)
+    axios.get(`https://18.188.32.86/api/user/${id}`)
       .then(response => {
         setUser(response.data);
         setLoading(false);
