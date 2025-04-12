@@ -18,7 +18,7 @@ const Login = () => {
 
         try {
             const response = await axios.post(
-                "https://18.188.32.86/users/login",
+                "https://18.188.32.86/users/login", // Asegúrate de que tu servidor esté activo
                 usuario,
                 {
                     withCredentials: true,
@@ -30,11 +30,13 @@ const Login = () => {
 
             console.log("Respuesta de la API:", response.data);
 
-            const Id = response.data.id;
+            // Ajustado al backend Flask: el token se llama 'access_token'
+            const token = response.data.access_token;
 
-            if (userId) {
+            if (token) {
+                localStorage.setItem("token", token);
                 alert("Inicio de sesión exitoso");
-                navigate(`/Views/${id}`);
+                navigate("/views");
             } else {
                 setError("Credenciales incorrectas");
             }
