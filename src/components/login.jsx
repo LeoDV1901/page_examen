@@ -17,7 +17,7 @@ const Login = () => {
         setError(null);
 
         try {
-            const response = await axios.post("http://3.142.156.97/login", usuario);
+            const response = await axios.post("https://3.142.156.97/login", usuario);
             console.log("Respuesta de la API:", response.data);
 
             if (response.data.token) {
