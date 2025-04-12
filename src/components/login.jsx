@@ -30,11 +30,11 @@ const Login = () => {
 
             console.log("Respuesta de la API:", response.data);
 
-            const userId = response.data.id;
+            const Id = response.data.id;
 
             if (userId) {
                 alert("Inicio de sesión exitoso");
-                navigate(`/Views/${userId}`);
+                navigate(`/Views/${id}`);
             } else {
                 setError("Credenciales incorrectas");
             }
