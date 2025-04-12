@@ -18,7 +18,7 @@ const Login = () => {
 
         try {
             const response = await axios.post(
-                "https://18.188.32.86/users/login", // Asegúrate de que tu servidor esté activo
+                "https://18.188.32.86/api/login", // Asegúrate de que tu servidor esté activo
                 usuario,
                 {
                     withCredentials: true,
