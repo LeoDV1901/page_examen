@@ -13,7 +13,7 @@ const EditUser = () => {
     });
 
     useEffect(() => {
-        axios.get(`http://3.145.18.237/users/${id_u}`)
+        axios.get(`https://18.188.32.86/users/actualizarusuario/${id_u}`)
             .then(response => setUsuario(response.data))
             .catch(error => console.error(error));
     }, [id_u]);
@@ -24,7 +24,7 @@ const EditUser = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.put(`http://3.145.18.237/users/${id_u}`, usuario)
+        axios.put(`https://18.188.32.86/users/actualizarusuario/${id_u}`, usuario)
             .then(() => {
                 alert("Usuario actualizado");
                 navigate("/UserView");
