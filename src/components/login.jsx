@@ -12,47 +12,45 @@ const Login = () => {
         setUsuario({ ...usuario, [e.target.name]: e.target.value });
     };
 
-const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(null);
 
-    try {
-        const response = await axios.post(
-            "https://18.188.32.86/users/login",
-            usuario,
-            {
-                withCredentials: true,
-                headers: {
-                    "Content-Type": "application/json",
-                },
+        try {
+            const response = await axios.post(
+                "https://18.188.32.86/users/login",
+                usuario,
+                {
+                    withCredentials: true,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            console.log("Respuesta de la API:", response.data);
+
+            const userId = response.data.id;
+
+            if (userId) {
+                alert("Inicio de sesión exitoso");
+                navigate(`/Views/${userId}`);
+            } else {
+                setError("Credenciales incorrectas");
             }
-        );
-
-        console.log("Respuesta de la API:", response.data);
-
-        const token = response.data.access_token;
-        const userId = response.data.id;
-
-        if (token && userId) {
-            localStorage.setItem("token", token);
-            alert("Inicio de sesión exitoso");
-            navigate(`/Views/${userId}`);
-        } else {
-            setError("Credenciales incorrectas");
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.msg) {
+                console.error("Respuesta con error:", error.response.data);
+                setError(error.response.data.msg);
+            } else if (error.request) {
+                console.error("No se recibió respuesta del servidor:", error.request);
+                setError("No se recibió respuesta del servidor");
+            } else {
+                console.error("Error inesperado:", error.message);
+                setError("Error inesperado al iniciar sesión");
+            }
         }
-    } catch (error) {
-        if (error.response && error.response.data && error.response.data.msg) {
-            console.error("Respuesta con error:", error.response.data);
-            setError(error.response.data.msg);
-        } else if (error.request) {
-            console.error("No se recibió respuesta del servidor:", error.request);
-            setError("No se recibió respuesta del servidor");
-        } else {
-            console.error("Error inesperado:", error.message);
-            setError("Error inesperado al iniciar sesión");
-        }
-    }
-};
+    };
 
     return (
         <div className="login-container">
