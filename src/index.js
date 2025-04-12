@@ -20,7 +20,7 @@ root.render(
         <Route path="/formulario" element={<Formulario />} /> {/* Ruta para el formulario */}
         <Route path="/" element={<Login />} /> {/* Ruta para el login */}
         <Route path="/Users" element={<UsersList /> }/>
-        <Route path="/Views" element={<UserDetails />} /> {/* Ruta para el login */}
+        <Route path="/Views/:id" element={<UserDetails />} /> {/* Ruta para el login */}
         <Route path="/Edit" element={<EditUser /> }/>
       </Routes>
     </Router>
