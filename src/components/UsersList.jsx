@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'; 
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Importamos useNavigate para redirigir
 import './css/UsersList.css';
 
 const UsersList = () => {
@@ -9,7 +8,6 @@ const UsersList = () => {
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 3;
-  const navigate = useNavigate(); // Hook para redirigir al usuario
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -20,7 +18,7 @@ const UsersList = () => {
           },
         });
         setUsers(response.data);
-        setFilteredUsers(response.data); // Inicializamos el filtro con todos los usuarios
+        setFilteredUsers(response.data);
       } catch (error) {
         console.error('Error fetching users', error);
       }
@@ -51,7 +49,7 @@ const UsersList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://18.188.32.86/users/${id}`, {
+      await axios.delete(`https://3.17.81.51/users/eliminarusuario/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('authToken')}`,
         },
@@ -64,15 +62,11 @@ const UsersList = () => {
   };
 
   const handleEdit = (id) => {
-    // Redirigir al formulario de edición
-    console.log(`Editar usuario con id: ${id}`);
-    navigate(`/edit/${id}`); // Redirige a la página de edición
+    window.location.href = `/user/${id}`;
   };
 
   const handleView = (id) => {
-    // Redirigir a la página de detalles del usuario
-    console.log(`Ver detalles del usuario con id: ${id}`);
-    navigate(`/user/${id}`); // Redirige a la página de ver detalles del usuario
+    window.location.href = `/Views/${id}`;
   };
 
   return (
