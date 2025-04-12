@@ -15,7 +15,7 @@ body {
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 50px 80px;              /* Más espacio interno */
-  max-width: 1200px;               /* MÁS ANCHO: ideal para escritorio */
+  max-width: 2200px;               /* MÁS ANCHO: ideal para escritorio */
   margin: 60px auto;
   animation: fadeInUp 0.6s ease-out;
 }
