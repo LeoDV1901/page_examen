@@ -9,19 +9,26 @@ import UsersList from './components/UsersList';
 import UserDetails from './components/UserView';
 import EditUser from './components/EditUser';
 
-// Usamos createRoot para renderizar la aplicación en React 18 y posterior
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-// Envolvemos el Router dentro de createRoot para tener el contexto de enrutamiento en toda la app
 root.render(
   <React.StrictMode>
-    <Router> {/* El Router es el contenedor que maneja las rutas */}
-      <Routes> {/* Configuramos las rutas */}
-        <Route path="/formulario" element={<Formulario />} /> {/* Ruta para el formulario */}
-        <Route path="/" element={<Login />} /> {/* Ruta para el login */}
-        <Route path="/Users" element={<UsersList /> }/>
-        <Route path="/Views" element={<UserDetails />} /> {/* Ruta para el login */}
-        <Route path="/user/${id}" element={<EditUser /> }/>
+    <Router>
+      <Routes>
+        {/* Ruta para login */}
+        <Route path="/" element={<Login />} />
+
+        {/* Ruta para formulario de creación de usuarios */}
+        <Route path="/formulario" element={<Formulario />} />
+
+        {/* Lista de usuarios */}
+        <Route path="/users/usuarios" element={<UsersList />} />
+
+        {/* Ver detalles de usuario */}
+        <Route path="/users/ver/:id" element={<UserDetails />} />
+
+        {/* Editar usuario */}
+        <Route path="/users/editar/:id" element={<EditUser />} />
       </Routes>
     </Router>
   </React.StrictMode>
